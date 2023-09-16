@@ -1,6 +1,5 @@
 ﻿using Aplication.FacturaAplication;
 using Domain.Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
@@ -20,25 +19,33 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetFacturas()
         {
-            List<Factura> facturas = _facturaService.GetFacturas();
+            Response<List<Factura>> facturas = _facturaService.GetFacturas();
             return Ok(facturas);
 
         }
 
         [HttpPost]
-        public IActionResult PostFactura(FacturaApiModel factura)
+        public IActionResult PostFactura(FacturaApiModel facturaM)
         {
+            Factura facturaEntity = new()
+            {
+                IdCliente = facturaM.IdCliente,
+                Folio = facturaM.Folio,
+                Saldo = facturaM.Saldo,
+                FechaFacturacion = facturaM.FechaFacturacion,
+                FechaCreacion = DateTime.Now
+            };
 
-            ResponseApiModel resp = _facturaService.CreateFactura(factura);
+            Response<int?> resp = _facturaService.CreateFactura(facturaEntity);
             return Ok(resp);
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete")]
-        public IActionResult DeleteFactura(FacturaApiModel factura)
+        public IActionResult DeleteFactura(int id)
         {
-            ResponseApiModel resp = _facturaService.DeleteFactura(factura.Id);
+            Response<bool> resp = _facturaService.DeleteFactura(id);
             return Ok(resp);
         }
     }

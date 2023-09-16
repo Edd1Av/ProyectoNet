@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Domain
 {
-    public class Response
+    public class Response<T>
     {
         public bool Success { get; set; }
-        public object? Content { get; set; }
-        public string? Error { get; set; }
+        public T? Content { get; set; }
+        public string? Message { get; set; }
     }
 }

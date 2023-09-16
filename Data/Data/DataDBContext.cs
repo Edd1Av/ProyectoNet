@@ -19,7 +19,7 @@ namespace Data.Data
         }
 
 
-        public DbSet<Cliente> Usuarios { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Factura> Facturas { get; set; }
     }
 }

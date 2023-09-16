@@ -4,8 +4,10 @@ namespace Aplication.ClienteAplication
 {
     public interface IClienteManagmentServices
     {
-        public abstract Response CreateUsuario(Cliente cliente);
-        public abstract Response DeleteUsuario(int id);
-        public abstract Response GetClientes();
+        public abstract Response<int?> CreateCliente(Cliente cliente);
+        public abstract Response<bool> DeleteCliente(int id);
+        public abstract Response<List<Cliente>> GetClientes();
+        public abstract Response<Cliente?> GetCliente(int id);
+        public abstract Response<bool> UpdateCliente(Cliente cliente);  
     }
 }
