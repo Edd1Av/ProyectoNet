@@ -4,7 +4,7 @@ namespace Domain.Domain
 {
     public class Cliente
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required]
         [StringLength(100)]
         public string? Nombre { get; set; }
@@ -17,6 +17,6 @@ namespace Domain.Domain
         [StringLength(100)]
         public string? CorreoElectronico { get; set; }
 
-        public List<Factura> Facturas { get; set; }
+        public List<Factura>? Facturas { get; set; }
     }
 }

@@ -23,6 +23,14 @@ namespace WebApi.Controllers
             return Ok(clientes);
         }
 
+        [HttpGet]
+        [Route("cliente")]
+        public IActionResult GetCliente(int id)
+        {
+            Response<Cliente?> cliente = _clienteService.GetCliente(id);
+            return Ok(cliente);
+        }
+
         [HttpPost]
         public IActionResult PostCliente(ClienteApiModel clienteApiModel)
         {
@@ -31,14 +39,28 @@ namespace WebApi.Controllers
                 Nombre = clienteApiModel.Nombre.Trim(),
                 Apellido = clienteApiModel.Apellido.Trim(),
                 Edad = clienteApiModel.Edad,
-                CorreoElectronico = clienteApiModel.CorreoElectronico.Trim(),
+                CorreoElectronico = clienteApiModel.CorreoElectronico.Trim().ToLower(),
             };
             Response<int?> resp = _clienteService.CreateCliente(cliente);
             return Ok(resp);
         }
 
-        [HttpPost]
-        [Route("delete")]
+        [HttpPut]
+        public IActionResult UpdateCliente(ClienteApiModel clienteApiModel)
+        {
+            Cliente cliente = new Cliente()
+            {
+                Id = clienteApiModel.Id,
+                Nombre = clienteApiModel.Nombre.Trim(),
+                Apellido = clienteApiModel.Apellido.Trim(),
+                Edad = clienteApiModel.Edad,
+                CorreoElectronico = clienteApiModel.CorreoElectronico.Trim().ToLower(),
+            };
+            Response<bool> resp = _clienteService.UpdateCliente(cliente);
+            return Ok(resp);
+        }
+
+        [HttpDelete]
         public IActionResult DeleteUsuario(int id)
         {
             Response<bool> resp = _clienteService.DeleteCliente(id);

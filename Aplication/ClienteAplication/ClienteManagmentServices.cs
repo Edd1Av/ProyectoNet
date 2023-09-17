@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Aplication.ClienteAplication
 {
-    internal class ClienteManagmentServices : IClienteManagmentServices
+    public class ClienteManagmentServices : IClienteManagmentServices
     {
         private readonly DataDBContext _context;
 
@@ -22,7 +22,10 @@ namespace Aplication.ClienteAplication
 
         public Response<int?> CreateCliente(Cliente clienteEntity)
         {
-
+            if (_context.Clientes.Any(x => x.CorreoElectronico.ToLower() == clienteEntity.CorreoElectronico.ToLower()))
+            {
+                return new Response<int?> { Success = true, Message = "Ya existe un cliente registrado con ese correo electrónico", Content = null };
+            }
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -96,6 +99,18 @@ namespace Aplication.ClienteAplication
 
         public Response<bool> UpdateCliente(Cliente cliente)
         {
+            if (cliente.Id == null || cliente.Id < 0)
+            {
+                return new Response<bool> { Success = true, Message = "El Id del cliente no es valido", Content = false };
+            }
+            if (_context.Clientes.Find(cliente.Id) == null)
+            {
+                return new Response<bool> { Success = true, Message = "El  no existe", Content = false };
+            }
+            if (_context.Clientes.Any(x => x.CorreoElectronico.ToLower() == cliente.CorreoElectronico.ToLower()))
+            {
+                return new Response<bool> { Success = true, Message = "Ya existe un cliente registrado con ese correo electrónico", Content = false };
+            }
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try

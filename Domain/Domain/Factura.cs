@@ -5,7 +5,7 @@ namespace Domain.Domain
 {
     public class Factura
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required]
         public int IdCliente { get; set; }
         [Required]
@@ -18,6 +18,6 @@ namespace Domain.Domain
         [Required]
         public DateTime FechaCreacion { get; set; }
         [ForeignKey("IdCliente")]
-        public Cliente Cliente { get; set; }
+        public Cliente? Cliente { get; set; }
     }
 }

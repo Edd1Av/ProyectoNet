@@ -15,6 +15,10 @@ namespace Aplication.FacturaAplication
 
         public Response<int?> CreateFactura(Factura facturaEntity)
         {
+            if (_context.Facturas.Any(x => x.Folio.ToUpper() == facturaEntity.Folio.ToUpper()))
+            {
+                return new Response<int?> { Success = true, Message = "Ya existe una factura con ese folio", Content = null };
+            }
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -90,6 +94,18 @@ namespace Aplication.FacturaAplication
 
         public Response<bool> UpdateFactura(Factura factura)
         {
+            if(factura.Id==null || factura.Id < 0)
+            {
+                return new Response<bool> { Success = true, Message = "El Id de la factura no es valido", Content = false };
+            }
+            if (_context.Facturas.Find(factura.Id) == null)
+            {
+                return new Response<bool> { Success = true, Message = "La factura no existe", Content = false };
+            }
+            if (_context.Facturas.Any(x => x.Folio.ToUpper() == factura.Folio.ToUpper()))
+            {
+                return new Response<bool> { Success = true, Message = "Ya existe una factura con ese folio", Content = false };
+            }
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
