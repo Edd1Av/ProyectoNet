@@ -98,7 +98,7 @@ namespace Aplication.FacturaAplication
             {
                 return new Response<bool> { Success = true, Message = "El Id de la factura no es valido", Content = false };
             }
-            if (_context.Facturas.Find(factura.Id) == null)
+            if (_context.Facturas.Any(x=>x.Id==factura.Id) == false)
             {
                 return new Response<bool> { Success = true, Message = "La factura no existe", Content = false };
             }
@@ -110,8 +110,10 @@ namespace Aplication.FacturaAplication
             {
                 try
                 {
-                    _context.Facturas.Attach(factura);
-                    _context.Facturas.Update(factura);
+                    Factura UpdateFactura = _context.Facturas.Find(factura.Id);
+                    UpdateFactura.FechaFacturacion = factura.FechaFacturacion;
+                    UpdateFactura.Saldo = factura.Saldo;
+                    UpdateFactura.Folio = factura.Folio;
                     _context.SaveChanges();
                     transaction.Commit();
                     return new Response<bool> { Success = true, Message = null, Content = true };                   

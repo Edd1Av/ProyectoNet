@@ -17,6 +17,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("Facturas")]
         public IActionResult GetFacturas()
         {
             Response<List<Factura>> facturas = _facturaService.GetFacturas();
@@ -25,6 +26,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("Factura")]
         public IActionResult GetFactura(int id)
         {
             Response<Factura?> factura = _facturaService.GetFactura(id);

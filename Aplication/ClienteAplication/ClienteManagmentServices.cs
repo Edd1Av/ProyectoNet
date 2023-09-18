@@ -103,19 +103,26 @@ namespace Aplication.ClienteAplication
             {
                 return new Response<bool> { Success = true, Message = "El Id del cliente no es valido", Content = false };
             }
-            if (_context.Clientes.Find(cliente.Id) == null)
-            {
-                return new Response<bool> { Success = true, Message = "El  no existe", Content = false };
-            }
-            if (_context.Clientes.Any(x => x.CorreoElectronico.ToLower() == cliente.CorreoElectronico.ToLower()))
+            if (_context.Clientes.Any(x => x.CorreoElectronico.ToLower() == cliente.CorreoElectronico.ToLower() && x.Id!=cliente.Id))
             {
                 return new Response<bool> { Success = true, Message = "Ya existe un cliente registrado con ese correo electrónico", Content = false };
+            }
+            if (_context.Clientes.Any(x => x.Id == cliente.Id) == false)
+            {
+                return new Response<bool> { Success = true, Message = "El cliente no existe", Content = false };
             }
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    _context.Clientes.Attach(cliente);
+                    //Cliente updateC = _context.Clientes.Find(cliente.Id);
+                    //if (updateC == null) {
+                    //    return new Response<bool> { Success = true, Message = "El cliente no existe", Content = false };
+                    //}
+                    //updateC.Nombre = cliente.Nombre;
+                    //updateC.Apellido = cliente.Apellido;
+                    //updateC.Edad = cliente.Edad;
+                    //updateC.CorreoElectronico = cliente.CorreoElectronico;
                     _context.Clientes.Update(cliente);
                     _context.SaveChanges();
                     transaction.Commit();

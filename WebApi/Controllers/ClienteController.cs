@@ -1,11 +1,12 @@
 ﻿using Aplication.ClienteAplication;
 using Domain.Domain;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class ClienteController : Controller
     {
         private readonly IClienteManagmentServices _clienteService;
@@ -16,7 +17,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("clientes")]
+        [Route("Clientes")]
         public IActionResult GetClientes()
         {
             Response<List<Cliente>> clientes = _clienteService.GetClientes();
@@ -24,7 +25,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("cliente")]
+        [Route("Cliente")]
         public IActionResult GetCliente(int id)
         {
             Response<Cliente?> cliente = _clienteService.GetCliente(id);
