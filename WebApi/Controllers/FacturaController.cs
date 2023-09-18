@@ -68,6 +68,7 @@ namespace WebApi.Controllers
 
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult DeleteFactura(int id)
         {
             Response<bool> resp = _facturaService.DeleteFactura(id);

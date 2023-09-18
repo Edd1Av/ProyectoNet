@@ -62,6 +62,7 @@ namespace WebApi.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult DeleteUsuario(int id)
         {
             Response<bool> resp = _clienteService.DeleteCliente(id);

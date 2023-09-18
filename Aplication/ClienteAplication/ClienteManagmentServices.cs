@@ -42,7 +42,7 @@ namespace Aplication.ClienteAplication
                 }
             }
 
-            return new Response<int?> { Success = true, Message = "Usuario registrado", Content=clienteEntity.Id};
+            return new Response<int?> { Success = true, Message = "Cliente registrado", Content=clienteEntity.Id};
         }
 
         public Response<bool> DeleteCliente(int id)
@@ -50,7 +50,7 @@ namespace Aplication.ClienteAplication
             Cliente usuarioEntity = _context.Clientes.Find(id);
             if (usuarioEntity == null)
             {
-                return new Response<bool> { Success = true, Message = "El usuario no existe", Content = false };
+                return new Response<bool> { Success = true, Message = "El cliente no existe", Content = false };
             }
 
             using (var transaction = _context.Database.BeginTransaction())
@@ -115,14 +115,6 @@ namespace Aplication.ClienteAplication
             {
                 try
                 {
-                    //Cliente updateC = _context.Clientes.Find(cliente.Id);
-                    //if (updateC == null) {
-                    //    return new Response<bool> { Success = true, Message = "El cliente no existe", Content = false };
-                    //}
-                    //updateC.Nombre = cliente.Nombre;
-                    //updateC.Apellido = cliente.Apellido;
-                    //updateC.Edad = cliente.Edad;
-                    //updateC.CorreoElectronico = cliente.CorreoElectronico;
                     _context.Clientes.Update(cliente);
                     _context.SaveChanges();
                     transaction.Commit();
